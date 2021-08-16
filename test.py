@@ -1,4 +1,4 @@
-import selenium, os, shutil, time
+import selenium, os, shutil, time, pandas
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
@@ -49,3 +49,49 @@ newFileName = filePath + '/' + 'menu.xlsx'
 fileName = max([filePath + '/' + f for f in os.listdir(filePath)], key=os.path.getctime)
 shutil.move(os.path.join(filePath, fileName), newFileName)
 
+#parse xlsx with pandas 
+menuSheet = pandas.read_excel(newFileName, sheet_name=0, engine='openpyxl')
+
+totalRow = menuSheet.shape[0] - 1
+print(menuSheet)
+
+bldIdx = []
+menuIdx = []
+
+for row in menuSheet.itertuples():
+    if (pandas.isnull(row[1]) == False):
+        bldIdx.append(row[0])
+    if (pandas.isnull(row[2]) == False):
+        menuIdx.append(row[0])
+        
+print('breakfast lunch dinner start idx')
+print(bldIdx)
+print('---------')
+print('menu start idx')
+print(menuIdx)
+
+# mon tue wed thu fri
+# breakfast lunch dinner
+menuTable = [[0 for i in range(5)] for j in range(3)]
+for i in range(0, 5): 
+    bStr = ""
+    lStr = "" 
+    dStr = "" 
+    for row in menuSheet.itertuples():
+        if (bldIdx[1] <= row[0] and row[0] < bldIdx[2] and pandas.isnull(row[i + 3]) == False):
+            bStr += row[i + 3] + '\n'
+        if (bldIdx[2] <= row[0] and row[0] < bldIdx[3] and pandas.isnull(row[i + 3]) == False):
+            lStr += row[i + 3] + '\n'
+        if (bldIdx[3] <= row[0] and row[0] < totalRow and pandas.isnull(row[i + 3]) == False):
+            dStr += row[i + 3] + '\n'
+    menuTable[0][i] = bStr
+    menuTable[1][i] = lStr
+    menuTable[2][i] = dStr
+
+print('friday print test')
+print('br')
+print(menuTable[0][3])
+print('lu')
+print(menuTable[1][3])
+print('di')
+print(menuTable[2][3])
