@@ -1,8 +1,9 @@
-import selenium, os, shutil, time, pandas
+import selenium, os, shutil, time, pandas, json
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
 from selenium.webdriver.chrome.options import Options
+
 
 filePath = os.getcwd() + '/downloads'
 
@@ -105,8 +106,21 @@ def parseXLSX(filePath):
     print(menuTable[1][3])
     print('di')
     print(menuTable[2][3])
+ 
+    menuJson = {
+        "monday" : menuTable[0][0] + menuTable[1][0] + menuTable[2][0],
+        "tuesday" : menuTable[0][1] + menuTable[1][1] + menuTable[2][1],
+        "wednesday" : menuTable[0][2] + menuTable[1][2] + menuTable[2][2],
+        "thursday" : menuTable[0][3] + menuTable[1][3] + menuTable[2][3],
+        "friday" : menuTable[0][4] + menuTable[1][4] + menuTable[2][4],
+    }
+
+    with open("menu.json", "w") as menu:
+        json.dump(menuJson, menu)
+
 
 if __name__ == '__main__':
     driver = init()
     downloadPath = navigateAndDownload(driver)
     parseXLSX(downloadPath)
+    driver.close()
