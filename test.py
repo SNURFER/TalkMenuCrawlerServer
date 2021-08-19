@@ -64,7 +64,7 @@ def parseXLSX(filePath):
     menuSheet = pandas.read_excel(filePath, sheet_name=0, engine='openpyxl')
 
     totalRow = menuSheet.shape[0] - 1
-    print(menuSheet)
+    # print(menuSheet)
 
     bldIdx = []
     menuIdx = []
@@ -75,11 +75,11 @@ def parseXLSX(filePath):
         if (pandas.isnull(row[2]) == False):
             menuIdx.append(row[0])
             
-    print('breakfast lunch dinner start idx')
-    print(bldIdx)
-    print('---------')
-    print('menu start idx')
-    print(menuIdx)
+    # print('breakfast lunch dinner start idx')
+    # print(bldIdx)
+    # print('---------')
+    # print('menu start idx')
+    # print(menuIdx)
 
     # mon tue wed thu fri
     # breakfast lunch dinner
@@ -89,10 +89,13 @@ def parseXLSX(filePath):
         lStr = "" 
         dStr = "" 
         for row in menuSheet.itertuples():
+            #breakfast
             if (bldIdx[1] <= row[0] and row[0] < bldIdx[2] and pandas.isnull(row[i + 3]) == False):
                 bStr += row[i + 3] + '\n'
+            #lunch
             if (bldIdx[2] <= row[0] and row[0] < bldIdx[3] and pandas.isnull(row[i + 3]) == False):
                 lStr += row[i + 3] + '\n'
+            #dinner
             if (bldIdx[3] <= row[0] and row[0] < totalRow and pandas.isnull(row[i + 3]) == False):
                 dStr += row[i + 3] + '\n'
         menuTable[0][i] = bStr
@@ -108,11 +111,31 @@ def parseXLSX(filePath):
     print(menuTable[2][3])
  
     menuJson = {
-        "monday" : menuTable[0][0] + menuTable[1][0] + menuTable[2][0],
-        "tuesday" : menuTable[0][1] + menuTable[1][1] + menuTable[2][1],
-        "wednesday" : menuTable[0][2] + menuTable[1][2] + menuTable[2][2],
-        "thursday" : menuTable[0][3] + menuTable[1][3] + menuTable[2][3],
-        "friday" : menuTable[0][4] + menuTable[1][4] + menuTable[2][4],
+        "monday" : { 
+            "breakfast" : menuTable[0][0],    
+            "lunch" : menuTable[1][0],    
+            "dinner" : menuTable[2][0],    
+        }, 
+        "tuesday" : {
+            "breakfast" : menuTable[0][1],    
+            "lunch" : menuTable[1][1],    
+            "dinner" : menuTable[2][1],   
+        },
+        "wednesday" : {
+            "breakfast" : menuTable[0][2],   
+            "lunch" : menuTable[1][2],   
+            "dinner" : menuTable[2][2],  
+        },
+        "thursday" : {
+            "breakfast" : menuTable[0][3],  
+            "lunch" : menuTable[1][3],    
+            "dinner" : menuTable[2][3],   
+        },
+        "friday" : {
+            "breakfast" : menuTable[0][4],   
+            "lunch" : menuTable[1][4],   
+            "dinner" : menuTable[2][4],    
+        }
     }
 
     with open("menu.json", "w") as menu:
