@@ -16,7 +16,7 @@ function runPyScript(){
     });
 }
 
-const job = schedule.scheduleJob('1 * * * * *', () => {
+const job = schedule.scheduleJob('2 * * * * *', () => {
     runPyScript();
     console.log('매 1분에 실행');
 });
@@ -35,6 +35,56 @@ app.get('/keyboard', (req, res) => {
     const data = JSON.parse(jsonFile);
 
     res.json(data);
+});
+
+app.get('/monday', (req, res) => {
+    const fs = require('fs');
+
+    const jsonFile = fs.readFileSync('./menu.json', 'utf8');
+    console.log(jsonFile);
+    const data = JSON.parse(jsonFile);
+
+    res.json(data["monday"]);
+});
+
+app.get('/tuesday', (req, res) => {
+    const fs = require('fs');
+
+    const jsonFile = fs.readFileSync('./menu.json', 'utf8');
+    console.log(jsonFile);
+    const data = JSON.parse(jsonFile);
+
+    res.json(data["tuesday"]);
+});
+
+app.get('/wednesday', (req, res) => {
+    const fs = require('fs');
+
+    const jsonFile = fs.readFileSync('./menu.json', 'utf8');
+    console.log(jsonFile);
+    const data = JSON.parse(jsonFile);
+
+    res.json(data["wednesday"]);
+});
+
+app.get('/thursday', (req, res) => {
+    const fs = require('fs');
+
+    const jsonFile = fs.readFileSync('./menu.json', 'utf8');
+    console.log(jsonFile);
+    const data = JSON.parse(jsonFile);
+
+    res.json(data["thursday"]);
+});
+
+app.get('/friday', (req, res) => {
+    const fs = require('fs');
+
+    const jsonFile = fs.readFileSync('./menu.json', 'utf8');
+    console.log(jsonFile);
+    const data = JSON.parse(jsonFile);
+
+    res.json(data["friday"]);
 });
 
 app.listen(3000, () => console.log('node on 3000'));
