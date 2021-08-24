@@ -7,3 +7,9 @@
 * 파이썬 모듈을 사용
   * 셀레니움을 통한 웹크롤링
   * pandas 이용 xlsx 메뉴 파서 구현
+### 서버 구동 방법
+```
+vim input (id, pw 설정)
+npm install
+npm run serve
+```
