@@ -16,13 +16,10 @@ function runPyScript(){
     });
 }
 
-const job = schedule.scheduleJob('2 * * * * *', () => {
+const job = schedule.scheduleJob('30 24 * * 6,7', () => {
     runPyScript();
-    console.log('매 1분에 실행');
+    console.log('매주 토, 일 자정에 수행');
 });
-// runPyScript();
-
-//test
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
