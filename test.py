@@ -12,9 +12,9 @@ def init():
     #download path setting
     option = Options()
     option.add_experimental_option('prefs', {'download.default_directory' : filePath})
-    option.add_argument('headless')
+    #option.add_argument('headless')
     #option.add_argument('--no-sandbox')
-    option.add_argument('--window-size=1920x1080')
+    #option.add_argument('--window-size=1920x1080')
     #target url and http get
     URL = 'https://talk.tmaxsoft.com/login.do'
     driver = webdriver.Chrome(executable_path='chromedriver', options=option)
@@ -152,7 +152,8 @@ def parseXLSX(filePath):
 
 
 if __name__ == '__main__':
-    driver = init()
-    downloadPath = navigateAndDownload(driver)
+    # driver = init()
+    # downloadPath = navigateAndDownload(driver)
+    downloadPath = filePath + '/' + 'menu.xlsx'
     parseXLSX(downloadPath)
-    driver.close()
+    # driver.close()
