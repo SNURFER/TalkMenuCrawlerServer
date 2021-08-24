@@ -8,13 +8,16 @@ const app = express();
 
 function runPyScript(){
     return new Promise((resolve, reject) => {
-        const pyBinPath = path.join(__dirname, '.venv/bin/python');
+//        const pyBinPath = path.join(__dirname, '.venv/bin/python');
+        const pyBinPath = '/usr/bin/python3';
         exec(pyBinPath + ' test.py', (err, stdout, stderr) => {
             if(err) reject(err);
             resolve(stdout);
         });
     });
 }
+
+runPyScript();
 
 const job = schedule.scheduleJob('30 24 * * 6,7', () => {
     runPyScript();
