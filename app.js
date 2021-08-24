@@ -55,13 +55,13 @@ app.post('/message', function (req, res) {
         });
     }
 
-    if (question == "아침") {
+    if (question == "아침" || question == "오늘 아침") {
         responseText = data["today"]["breakfast"];
     }
-    if (question == "점심") {
+    if (question == "점심" || question == "오늘 점심") {
         responseText = data["today"]["lunch"];
     }
-    if (question == "저녁") {
+    if (question == "저녁" || question == "오늘 저녁") {
         responseText = data["today"]["lunch"];
     }
 
