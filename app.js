@@ -6,6 +6,16 @@ const express = require('express');
 
 const app = express();
 
+function getWeekDayString(num) {
+    if (num == 1) return 'monday';
+    if (num == 2) return 'tuesday';
+    if (num == 3) return 'wednesday';
+    if (num == 4) return 'thursday';
+    if (num == 5) return 'friday';
+
+    return 'friday';
+}
+
 function runPyScript(){
     return new Promise((resolve, reject) => {
 //        const pyBinPath = path.join(__dirname, '.venv/bin/python');
@@ -32,6 +42,10 @@ app.post('/message', function (req, res) {
     const jsonFile = fs.readFileSync('./menu.json', 'utf8');
     const data = JSON.parse(jsonFile);
 
+    const date = new Date();
+    const dayNum = date.getDay();
+    const dayStr = getWeekDayString(dayNum);
+
     const question = req.body.userRequest.utterance;
     let responseText = '';
     const quickReplies = [];
@@ -56,13 +70,13 @@ app.post('/message', function (req, res) {
     }
 
     if (question == "아침" || question == "오늘 아침") {
-        responseText = data["today"]["breakfast"];
+        responseText = data[dayStr]["breakfast"];
     }
     if (question == "점심" || question == "오늘 점심") {
-        responseText = data["today"]["lunch"];
+        responseText = data[dayStr]["lunch"];
     }
     if (question == "저녁" || question == "오늘 저녁") {
-        responseText = data["today"]["lunch"];
+        responseText = data[dayStr]["dinner"];
     }
 
     if (question == "월요일") {
