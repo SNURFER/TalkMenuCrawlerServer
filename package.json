@@ -24,5 +24,11 @@
     "node-cron": "3.0.0",
     "node-schedule": "2.0.0",
     "nodemon": "^2.0.12"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "menu.json",
+      "downloads/*"
+    ]
   }
 }
