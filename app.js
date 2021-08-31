@@ -60,8 +60,7 @@ const job = schedule.scheduleJob('30 24 * * 6,7', () => {
     console.log('매주 토, 일 자정에 수행');
 });
 
-const dailyJob = schedule.scheduleJob('1 0 * * *', () => {
-    console.log('매일 자정에 메뉴를 파싱')
+function loadMenu() {
     const jsonFile = fs.readFileSync('./menu.json', 'utf8');
     data = JSON.parse(jsonFile);
 
@@ -70,9 +69,17 @@ const dailyJob = schedule.scheduleJob('1 0 * * *', () => {
     const dayStr = getWeekDayString(dayNum);
 
     data["today"] = data[dayStr];
+}
+
+const dailyJob = schedule.scheduleJob('1 0 * * *', () => {
+    loadMenu();
+    console.log('매일 자정에 메뉴를 파싱')
 });
 
 app.post('/message', function (req, res) {
+    if (data === undefined) {
+        loadMenu();
+    }
 
     const utterance = req.body.userRequest.utterance;
     let responseText = '';
