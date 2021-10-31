@@ -49,8 +49,15 @@ def navigateAndDownload(driver):
     driver.find_element_by_id('menuTM0012').click()
     driver.find_element_by_id('listT0').click()
 
+    listIdx = 0
+    while True:
+        element = driver.find_element_by_css_selector('#listT%s > td.td_3th > div' % listIdx)
+        if (element.text.find('메뉴') > 0):
+            break
+        listIdx += 1
+
     #download menu
-    element = driver.find_element_by_css_selector('#detailView0 > td > div > div > ul > li.boardBtnArea.borBottomEb > div > a')
+    element = driver.find_element_by_css_selector('#detailView%s > td > div > div > ul > li.boardBtnArea.borBottomEb > div > a' % listIdx)
     element.click()
 
     #rename menu
