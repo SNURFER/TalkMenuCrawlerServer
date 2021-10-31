@@ -171,6 +171,5 @@ def parseXLSX(filePath):
 if __name__ == '__main__':
     driver = init()
     downloadPath = navigateAndDownload(driver)
-    downloadPath = filePath + '/' + 'menu.xlsx'
     parseXLSX(downloadPath)
     driver.quit()
