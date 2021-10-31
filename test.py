@@ -61,6 +61,16 @@ def navigateAndDownload(driver):
 
     return newFileName
 
+def modifiedEndIdx(menuSheet, menuIdx, totalRow):
+    retVal = totalRow
+    for row in menuSheet.itertuples():
+        if (pandas.isnull(row[7]) and pandas.isnull(row[1]) and pandas.isnull(row[2]) and
+         pandas.isnull(row[3]) and pandas.isnull(row[4]) and pandas.isnull(row[5]) and 
+         pandas.isnull(row[6]) and row.Index > menuIdx[-1]):
+            retVal = row.Index
+            break
+    return retVal
+
 def parseXLSX(filePath):
     #parse xlsx with pandas 
     menuSheet = pandas.read_excel(filePath, sheet_name=0, engine='openpyxl')
@@ -76,6 +86,9 @@ def parseXLSX(filePath):
         if (pandas.isnull(row[2]) == False):
             menuIdx.append(row[0])
             
+    # modifiedEndIdx for bugfix 
+    lastIdx = modifiedEndIdx(menuSheet, menuIdx, totalRow)
+
     # mon tue wed thu fri
     # breakfast lunch dinner
     menuTable = [[0 for i in range(3)] for j in range(5)]
@@ -84,6 +97,10 @@ def parseXLSX(filePath):
         lStr = "" 
         dStr = "" 
         for row in menuSheet.itertuples():
+            #error handling 
+            if (row.Index > lastIdx):
+                break
+
             #breakfast
             if (bldIdx[1] <= row[0] and row[0] < bldIdx[2] and pandas.isnull(row[i + 3]) == False):
                 if (row[0] in menuIdx):
@@ -152,8 +169,8 @@ def parseXLSX(filePath):
 
 
 if __name__ == '__main__':
-    # driver = init()
-    # downloadPath = navigateAndDownload(driver)
+    driver = init()
+    downloadPath = navigateAndDownload(driver)
     downloadPath = filePath + '/' + 'menu.xlsx'
     parseXLSX(downloadPath)
-    # driver.close()
+    driver.quit()
