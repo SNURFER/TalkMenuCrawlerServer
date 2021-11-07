@@ -47,7 +47,6 @@ def navigateAndDownload(driver):
     element = driver.find_element_by_css_selector('#menuLevelTop > li:nth-child(3) > a')
     element.click()
     driver.find_element_by_id('menuTM0012').click()
-    driver.find_element_by_id('listT0').click()
 
     listIdx = 0
     while True:
@@ -57,6 +56,8 @@ def navigateAndDownload(driver):
         listIdx += 1
 
     #download menu
+    element = driver.find_element_by_id('listT%s' % listIdx)
+    element.click()
     element = driver.find_element_by_css_selector('#detailView%s > td > div > div > ul > li.boardBtnArea.borBottomEb > div > a' % listIdx)
     element.click()
 
