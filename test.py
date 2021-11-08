@@ -79,6 +79,17 @@ def modifiedEndIdx(menuSheet, menuIdx, totalRow):
             break
     return retVal
 
+def getMondayIndex(row):
+    idx = 0
+    retVal = 3 
+    for s in row:
+        if (type(s) == str and s.find('월') != -1):
+            retVal = idx
+            break
+        idx += 1
+
+    return retVal
+
 def parseXLSX(filePath):
     #parse xlsx with pandas 
     menuSheet = pandas.read_excel(filePath, sheet_name=0, engine='openpyxl')
@@ -108,22 +119,25 @@ def parseXLSX(filePath):
             #error handling 
             if (row.Index > lastIdx):
                 break
+            #get monday index
+            if (row.Index == 0):
+                mondayIdx = getMondayIndex(row)
 
             #breakfast
-            if (bldIdx[1] <= row[0] and row[0] < bldIdx[2] and pandas.isnull(row[i + 3]) == False):
+            if (bldIdx[1] <= row[0] and row[0] < bldIdx[2] and pandas.isnull(row[i + mondayIdx]) == False):
                 if (row[0] in menuIdx):
                     bStr += '\n' + row[2] + '\n'
-                bStr += row[i + 3] + '\n'
+                bStr += row[i + mondayIdx] + '\n'
             #lunch
-            if (bldIdx[2] <= row[0] and row[0] < bldIdx[3] and pandas.isnull(row[i + 3]) == False):
+            if (bldIdx[2] <= row[0] and row[0] < bldIdx[3] and pandas.isnull(row[i + mondayIdx]) == False):
                 if (row[0] in menuIdx):
                     lStr += '\n' + row[2] + '\n'
-                lStr += row[i + 3] + '\n'
+                lStr += row[i + mondayIdx] + '\n'
             #dinner
-            if (bldIdx[3] <= row[0] and row[0] < totalRow and pandas.isnull(row[i + 3]) == False):
+            if (bldIdx[3] <= row[0] and row[0] < totalRow and pandas.isnull(row[i + mondayIdx]) == False):
                 if (row[0] in menuIdx):
                     dStr += '\n' + row[2] + '\n'
-                dStr += row[i + 3] + '\n'
+                dStr += row[i + mondayIdx] + '\n'
 
         menuTable[i][0] = bStr
         menuTable[i][1] = lStr
