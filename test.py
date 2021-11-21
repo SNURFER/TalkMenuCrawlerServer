@@ -12,9 +12,14 @@ def init():
     #download path setting
     option = Options()
     option.add_experimental_option('prefs', {'download.default_directory' : filePath})
-    option.add_argument('headless')
-    #option.add_argument('--no-sandbox')
+
+    #headless option for linux server
+    # option.add_argument('headless')
+    # option.add_argument('--no-sandbox')
+    # option.add_argument('--disable-gpu')
+
     option.add_argument('--window-size=1920x1080')
+
     #target url and http get
     URL = 'https://talk.tmaxsoft.com/login.do'
     driver = webdriver.Chrome(executable_path='chromedriver', options=option)
