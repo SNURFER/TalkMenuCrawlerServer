@@ -13,3 +13,7 @@ vim input (id, pw 설정)
 npm install
 npm run serve
 ```
+
+## 카카오 오픈빌더와 연동하여 챗봇 서비스 제공
+<img width="380" alt="스크린샷 2022-08-04 오후 11 50 21" src="https://user-images.githubusercontent.com/42398891/182877568-1de49724-3d7c-4ecd-9287-dbb2ee55866d.png">
+<img width="398" alt="스크린샷 2022-08-04 오후 11 51 58" src="https://user-images.githubusercontent.com/42398891/182877979-e8fa53eb-32ee-4db0-898e-ce5f45dcf809.png">
