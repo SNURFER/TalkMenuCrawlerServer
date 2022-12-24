@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/SNURFER/TalkMenuCrawlerServer#readme",
   "dependencies": {
-    "express": "4.17.1",
+    "express": "4.17.3",
     "node-cron": "3.0.0",
     "node-schedule": "2.0.0",
     "nodemon": "^2.0.12"
